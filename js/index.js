@@ -11,7 +11,6 @@ window.addEventListener('load', function () {
     var adver = document.querySelector('.advertising');
     var w = adver.offsetWidth;
     var index = 0;
-    var prevent = true;
     var timer = setInterval(function () {
         index++;
         translatex = -index * w;
@@ -19,23 +18,19 @@ window.addEventListener('load', function () {
         adverbar.style.transform = 'translateX(' + translatex + 'px)';
     }, 2000);
     adverbar.addEventListener('transitionend', function () {
-        if (prevent) {
-            prevent = false;
-            if (index >= adverbar.children.length - 2) {
-                index = 0;
-                adverbar.style.transition = 'none';
-                translatex = -index * w;
-                adverbar.style.transform = 'translateX(' + translatex + 'px)';
-            } else if (index < 0) {
-                index = adverbar.children.length - 3;
-                adverbar.style.transition = 'none';
-                translatex = -index * w;
-                adverbar.style.transform = 'translateX(' + translatex + 'px)';
-            }
-            dotbar.querySelector('.current').classList.remove('current');
-            dotbar.children[index].classList.add('current');
-            prevent = true;
+        if (index >= adverbar.children.length - 2) {
+            index = 0;
+            adverbar.style.transition = 'none';
+            translatex = -index * w;
+            adverbar.style.transform = 'translateX(' + translatex + 'px)';
+        } else if (index < 0) {
+            index = adverbar.children.length - 3;
+            adverbar.style.transition = 'none';
+            translatex = -index * w;
+            adverbar.style.transform = 'translateX(' + translatex + 'px)';
         }
+        dotbar.querySelector('.current').classList.remove('current');
+        dotbar.children[index].classList.add('current');
     })
     // 滾動屏幕
     var startX = 0;
