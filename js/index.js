@@ -36,43 +36,48 @@ window.addEventListener('load', function () {
     var startX = 0;
     var move = 0;
     var flag = false;
-    adverbar.addEventListener('touchstart', function (e) {
-        startX = e.targetTouches[0].pageX;
-        clearInterval(timer);
-    });
-    adverbar.addEventListener('touchmove', function (e) {
-        flag = true;
-        move = e.targetTouches[0].pageX - startX;
-        translatex = -index * w + move;
-        adverbar.style.transition = 'none';
-        adverbar.style.transform = 'translateX(' + translatex + 'px)';
-        e.preventDefault();
-    });
-    adverbar.addEventListener('touchend', function () {
-        if (flag) {
-            if (Math.abs(move) > 50) {
-                if (move < 0) {
-                    index++;
-                } else {
-                    index--;
-                }
-                moveGet();
-            } else {
-                moveGet();
-            }
-            flag = false;
-        }
-        clearInterval(timer);
-        timer = setInterval(function () {
-            index++;
-            translatex = -index * w;
-            adverbar.style.transition = 'all .3s';
+    var prevent = true;
+    if (prevent) {
+        prevent = false;
+        adverbar.addEventListener('touchstart', function (e) {
+            startX = e.targetTouches[0].pageX;
+            clearInterval(timer);
+        });
+        adverbar.addEventListener('touchmove', function (e) {
+            flag = true;
+            move = e.targetTouches[0].pageX - startX;
+            translatex = -index * w + move;
+            adverbar.style.transition = 'none';
             adverbar.style.transform = 'translateX(' + translatex + 'px)';
-        }, 2000);
-    })
+            e.preventDefault();
+        });
+        adverbar.addEventListener('touchend', function () {
+            if (flag) {
+                if (Math.abs(move) > 50) {
+                    if (move < 0) {
+                        index++;
+                    } else {
+                        index--;
+                    }
+                    moveGet();
+                } else {
+                    moveGet();
+                }
+                flag = false;
+            }
+            clearInterval(timer);
+            timer = setInterval(function () {
+                index++;
+                translatex = -index * w;
+                adverbar.style.transition = 'all .3s';
+                adverbar.style.transform = 'translateX(' + translatex + 'px)';
+            }, 2000);
+        })
+    }
     function moveGet() {
         translatex = -index * w;
         adverbar.style.transition = 'all .3s';
         adverbar.style.transform = 'translateX(' + translatex + 'px)';
+        prevent = true;
     };
 })
